@@ -1,54 +1,60 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Products</h1>
+<div class="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Products</h1>
 
-<!-- Display success message -->
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
+    <!-- Display success message -->
+    @if (session('success'))
+        <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <a href="{{ route('products.create') }}" class="inline-block mb-4 py-2 px-4 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        Create Product
+    </a>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+            <thead class="bg-gray-100 text-gray-700">
+                <tr>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Name</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Category</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Photo</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Price</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-800">
+                @forelse ($products as $product)
+                <tr class="hover:bg-gray-50">
+                    <td class="py-2 px-4 border-b border-gray-300">{{ $product->name }}</td>
+                    <td class="py-2 px-4 border-b border-gray-300">{{ $product->category->name }}</td>
+                    <td class="py-2 px-4 border-b border-gray-300">
+                        @if ($product->photo)
+                            <img src="{{ asset('storage/' . $product->photo) }}" alt="Product Photo" class="w-24 h-auto rounded-md">
+                        @else
+                            No photo
+                        @endif
+                    </td>
+                    <td class="py-2 px-4 border-b border-gray-300">${{ number_format($product->price, 2) }}</td>
+                    <td class="py-2 px-4 border-b border-gray-300">
+                        <a href="{{ route('products.edit', $product->id) }}" class="inline-block mr-2 py-1 px-3 bg-yellow-500 text-white text-sm font-bold rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">Edit</a>
+                        <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this product?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="py-1 px-3 bg-red-500 text-white text-sm font-bold rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="py-2 px-4 border-b border-gray-300 text-center text-gray-500">No products found.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-@endif
-
-<a href="{{ route('products.create') }}" class="btn btn-primary">Create Product</a>
-
-<table class="table table-striped mt-3">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Photo</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @forelse ($products as $product)
-        <tr>
-            <td>{{ $product->name }}</td>
-            <td>{{ $product->category->name }}</td>
-            <td>
-                @if ($product->photo)
-                    <img src="{{ asset('storage/' . $product->photo) }}" alt="Product Photo" style="width: 100px; height: auto;">
-                @else
-                    No photo
-                @endif
-            </td>
-            <td>${{ number_format($product->price, 2) }}</td>
-            <td>
-                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                </form>
-            </td>
-        </tr>
-        @empty
-        <tr>
-            <td colspan="5">No products found.</td>
-        </tr>
-        @endforelse
-    </tbody>
-</table>
+</div>
 @endsection

@@ -106,7 +106,6 @@
                             " alt="{{ $product->name }}" class="w-full h-32 object-cover mb-4 rounded-lg">
                             <h3 class="text-lg font-semibold mb-2">{{ $product->name }}</h3>
                             <p class="text-gray-600 mb-4 text-sm">{{ $product->description }}</p>
-                            <a href="#" class="text-blue-600 hover:underline text-sm">Learn more</a>
                         </div>
                     </div>
                 @endforeach

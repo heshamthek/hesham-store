@@ -13,15 +13,12 @@ use App\Http\Controllers\ContactController;
 
 Route::get('/landing', [LandingPageController::class, 'index'])->name('landing');
 
-
-
 Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
 
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Define profile routes with authentication middleware
 Route::middleware('auth')->group(function () {
@@ -34,9 +31,9 @@ Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact
 Route::view('/', 'auth.register')->middleware('guest');
 
 Route::group(['middleware' => 'admin'], function () {
-    Route::get('/dashboard')->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
-
-
 
 require __DIR__.'/auth.php';
