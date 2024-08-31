@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body   >
-<nav class="flex items-center justify-between flex-wrap bg-gray-500 p-1.5">
+<nav class="flex items-center justify-between flex-wrap bg-gradient-to-r from-cyan-500 to-blue-500 p-1.5">
   <div class="flex items-center flex-shrink-0 text-white mr-6">
     <span class="font-semibold text-xl tracking-tight">Hesham store </span>
   </div>
@@ -35,7 +35,7 @@
 <div class="flex h-screen bg-gray-100">
 
     <!-- Sidebar -->
-    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 md:static md:w-64 bg-gray-500 text-white transition-transform duration-300 ease-in-out">
+    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:translate-x-0 md:static md:w-64 bg-gradient-to-r from-cyan-500 to-blue-500 text-white transition-transform duration-300 ease-in-out">
         <div class="flex items-center justify-between p-4">
             <h1 class="text-lg font-bold">{{ Auth::user()->name }}</h1>
             <!-- Close Button for Mobile -->
